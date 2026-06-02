@@ -2,22 +2,6 @@ body {
     margin: 0;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgb(9, 190, 9);
-    height: 60px;
-}
-
-.header a {
-    margin: 10px;
-    text-decoration: none;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-}
-
 .products-list {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
