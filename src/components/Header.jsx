@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/header.css'
 
-export function Header() {
+export function Header({cartLength}) {
   const searchRef = useRef(null);
 
   function onSearch() {
@@ -27,7 +27,7 @@ export function Header() {
         </div>
         <div className="right-section">
           <div><Link to="orders">Заказы</Link></div>
-          <div><Link to="checkout">Корзина (2)</Link></div>
+          <div><Link to="checkout">Корзина {cartLength > 0 && `(${cartLength})`}</Link></div>
         </div>
     </div>
   )

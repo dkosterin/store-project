@@ -1,6 +1,75 @@
 import '../styles/checkout.css'
 
-export function CheckoutPage() {
+function CartItem(product) {
+  return (
+    <div className="cart-item-container">
+      <div className="delivery-date">
+        Дата доставки: Вторник, 11 июня
+      </div>
+
+      <div className="cart-item-details-grid">
+        <img className="product-image"
+          src={product.image} />
+
+        <div className="cart-item-details">
+          <div className="product-name">
+            {product.title}
+          </div>
+          <div className="product-price">
+            {product.price} руб.
+          </div>
+        </div>
+
+        <div className="delivery-options">
+          <div className="delivery-options-title">
+            Доставка:
+          </div>
+          <div className="delivery-option">
+            <input type="radio" checked
+              className="delivery-option-input"
+              name="delivery-option-1" />
+            <div>
+              <div className="delivery-option-date">
+                Четверг, 4 июня
+              </div>
+              <div className="delivery-option-price">
+                Бесплатно
+              </div>
+            </div>
+          </div>
+          <div className="delivery-option">
+            <input type="radio"
+              className="delivery-option-input"
+              name="delivery-option-1" />
+            <div>
+              <div className="delivery-option-date">
+                Среда, 3 июня
+              </div>
+              <div className="delivery-option-price">
+                120 руб.
+              </div>
+            </div>
+          </div>
+          <div className="delivery-option">
+            <input type="radio"
+              className="delivery-option-input"
+              name="delivery-option-1" />
+            <div>
+              <div className="delivery-option-date">
+                Вторник, 2 июня
+              </div>
+              <div className="delivery-option-price">
+                350 руб.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function CheckoutPage({ cart }) {
   return (
     <>
       <div className="checkout-page">
@@ -8,133 +77,7 @@ export function CheckoutPage() {
 
         <div className="checkout-grid">
           <div className="order-summary">
-            <div className="cart-item-container">
-              <div className="delivery-date">
-                Дата доставки: Вторник, 11 июня
-              </div>
-
-              <div className="cart-item-details-grid">
-                <img className="product-image"
-                  src="./men-athletic-shoes-white.jpg" />
-
-                <div className="cart-item-details">
-                  <div className="product-name">
-                    Название
-                  </div>
-                  <div className="product-price">
-                    1000 руб.
-                  </div>
-                </div>
-
-                <div className="delivery-options">
-                  <div className="delivery-options-title">
-                    Доставка:
-                  </div>
-                  <div className="delivery-option">
-                    <input type="radio" checked
-                      className="delivery-option-input"
-                      name="delivery-option-1" />
-                    <div>
-                      <div className="delivery-option-date">
-                        Четверг, 4 июня
-                      </div>
-                      <div className="delivery-option-price">
-                        Бесплатно
-                      </div>
-                    </div>
-                  </div>
-                  <div className="delivery-option">
-                    <input type="radio"
-                      className="delivery-option-input"
-                      name="delivery-option-1" />
-                    <div>
-                      <div className="delivery-option-date">
-                        Среда, 3 июня
-                      </div>
-                      <div className="delivery-option-price">
-                        120 руб.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="delivery-option">
-                    <input type="radio"
-                      className="delivery-option-input"
-                      name="delivery-option-1" />
-                    <div>
-                      <div className="delivery-option-date">
-                        Вторник, 2 июня
-                      </div>
-                      <div className="delivery-option-price">
-                        350 руб.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="cart-item-container">
-              <div className="delivery-date">
-                Доставка: Среда, 15 июня
-              </div>
-
-              <div className="cart-item-details-grid">
-                <img className="product-image"
-                  src="./men-brown-flat-sneakers.jpg" />
-
-                <div className="cart-item-details">
-                  <div className="product-name">
-                    Название
-                  </div>
-                  <div className="product-price">
-                    1000 руб.
-                  </div>
-                </div>
-
-                <div className="delivery-options">
-                  <div className="delivery-options-title">
-                    Доставка:
-                  </div>
-
-                  <div className="delivery-option">
-                    <input type="radio" className="delivery-option-input"
-                      name="delivery-option-2" />
-                    <div>
-                      <div className="delivery-option-date">
-                        Четверг, 4 июня
-                      </div>
-                      <div className="delivery-option-price">
-                        Бесплатно
-                      </div>
-                    </div>
-                  </div>
-                  <div className="delivery-option">
-                    <input type="radio" checked className="delivery-option-input"
-                      name="delivery-option-2" />
-                    <div>
-                      <div className="delivery-option-date">
-                        Среда, 3 июня
-                      </div>
-                      <div className="delivery-option-price">
-                        120 руб.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="delivery-option">
-                    <input type="radio" className="delivery-option-input"
-                      name="delivery-option-2" />
-                    <div>
-                      <div className="delivery-option-date">
-                        Вторник, 2 июня
-                      </div>
-                      <div className="delivery-option-price">
-                        350 руб.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {cart.map((item => <CartItem key={item.id} {...item} />))}
           </div>
 
           <div className="payment-summary">
