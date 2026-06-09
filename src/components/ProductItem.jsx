@@ -8,7 +8,7 @@ export function ProductItem(props) {
             <img src={props.image} />
         </div>
         <div className="product-title">{props.title}</div>
-        <div className="product-sailer">{props.sailer}</div>
+        <div className="product-seller">{props.seller}</div>
         <div className="item-add-form">
             <span className="product-price">{props.price} руб.</span>
             <button className="add-btn">Добавить</button>

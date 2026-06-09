@@ -6,21 +6,21 @@ export function ProductList() {
     {
       id: 1,
       title: "Кросовки",
-      sailer: "Продавец",
+      seller: "Продавец",
       price: 1000,
       image: "./men-athletic-shoes-white.jpg"
     },
     {
       id: 2,
       title: "Другие кроссовки",
-      sailer: "Продавец",
+      seller: "Продавец",
       price: 600,
       image: "./men-brown-flat-sneakers.jpg"
     },
     {
       id: 3,
       title: "Рубашка",
-      sailer: "Продавец",
+      seller: "Продавец",
       price: 1500,
       image: "./men-golf-polo-t-shirt-gray.jpg"
     },

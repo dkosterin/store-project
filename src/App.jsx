@@ -13,7 +13,7 @@ function App() {
       <Header />
       <Routes>
         <Route index element={<ProductList />} />
-        <Route path="checkout.html" element={<CheckoutPage />} />
+        <Route path="checkout" element={<CheckoutPage />} />
       </Routes>
     </BrowserRouter>
   )
