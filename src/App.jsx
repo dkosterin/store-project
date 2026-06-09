@@ -8,18 +8,24 @@ import { CheckoutPage } from './pages/checkout.jsx'
 // npm install react-router
 // npm install react-router-dom
 
+/*
+В корзине добавить к CartItem кнопку удалить, чтобы она работала
+*/
+
 function App() {
   const [cart, setCart] = useState([{
       id: 1,
       title: "Кросовки",
       price: 1000,
-      image: "./men-athletic-shoes-white.jpg"
+      image: "./men-athletic-shoes-white.jpg",
+      quantity: 1
     },
     {
       id: 2,
       title: "Другие кроссовки",
       price: 600,
-      image: "./men-brown-flat-sneakers.jpg"
+      image: "./men-brown-flat-sneakers.jpg",
+      quantity: 2
     },
   ]);
 
@@ -29,8 +35,10 @@ function App() {
     <BrowserRouter>
       <Header cartLength={cart.length} />
       <Routes>
-        <Route index element={<ProductList />} />
-        <Route path="checkout" element={<CheckoutPage cart={cart} />} />
+        <Route index element={<ProductList cart={cart} 
+          setCart={setCart} />} />
+        <Route path="checkout" element={<CheckoutPage cart={cart} 
+          setCart={setCart} />} />
       </Routes>
     </BrowserRouter>
   )

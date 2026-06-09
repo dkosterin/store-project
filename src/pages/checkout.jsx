@@ -1,6 +1,6 @@
 import '../styles/checkout.css'
 
-function CartItem(product) {
+function CartItem({product, onRemove}) {
   return (
     <div className="cart-item-container">
       <div className="delivery-date">
@@ -65,11 +65,16 @@ function CartItem(product) {
           </div>
         </div>
       </div>
+      <div className="bottom-part">
+        <button onClick={onRemove} className='remove-btn'>Удалить</button>
+        <div>Количество: {product.quantity}</div>
+      </div>
     </div>
   )
 }
 
-export function CheckoutPage({ cart }) {
+export function CheckoutPage({ cart, setCart }) {
+  console.log(cart);
   return (
     <>
       <div className="checkout-page">
@@ -77,7 +82,18 @@ export function CheckoutPage({ cart }) {
 
         <div className="checkout-grid">
           <div className="order-summary">
-            {cart.map((item => <CartItem key={item.id} {...item} />))}
+            {cart.map((item => <CartItem key={item.id} product={item} 
+              onRemove={() => {
+                if (item.quantity > 1) {
+                  setCart(cart.map((cartItem) => cartItem.id === item.id ? 
+                    {...cartItem, quantity: cartItem.quantity - 1} : 
+                    {...cartItem}));
+                }
+                else {
+                  setCart(cart.filter((cartItem) => cartItem.id != item.id));
+                }
+              }
+            } />))}
           </div>
 
           <div className="payment-summary">
