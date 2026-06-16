@@ -2,18 +2,20 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/header.css'
 
-export function Header({cartLength}) {
+export function Header({cartLength, onSearch}) {
   const searchRef = useRef(null);
 
-  function onSearch() {
+  function handleSearch() {
     // Если поле поиска пустое, передвинуть в поле курсор
     // В противном случае "поиск"
     //console.log(searchRef.current.value);
     if (searchRef.current.value === "") {
       searchRef.current.focus();
+      onSearch("");
     }
     else {
-      console.log(`Поиск: ${searchRef.current.value}`);
+      onSearch(searchRef.current.value);
+      //console.log(`Поиск: ${searchRef.current.value}`);
     }
   }
 
@@ -23,7 +25,7 @@ export function Header({cartLength}) {
         <div className="middle-section">
           <input className="search-bar" type="text" placeholder="Поиск" 
             ref={searchRef} />
-          <button onClick={onSearch} className="search-button">Найти</button>
+          <button onClick={handleSearch} className="search-button">Найти</button>
         </div>
         <div className="right-section">
           <div><Link to="orders">Заказы</Link></div>

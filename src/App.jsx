@@ -29,14 +29,18 @@ function App() {
     },
   ]);
 
-  //const [cart, setCart] = useState([]);
+  const [search, setSearch] = useState("");
 
+  /* Что можно сделать:
+  1. Перейти на useContext
+  2. Перейти к useReducer
+  */
   return (
     <BrowserRouter>
-      <Header cartLength={cart.length} />
+      <Header cartLength={cart.length} onSearch={setSearch}/>
       <Routes>
         <Route index element={<ProductList cart={cart} 
-          setCart={setCart} />} />
+          setCart={setCart} search={search}/>} />
         <Route path="checkout" element={<CheckoutPage cart={cart} 
           setCart={setCart} />} />
       </Routes>
