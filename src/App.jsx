@@ -1,16 +1,10 @@
 import { useState, lazy, Suspense } from 'react'
 import { Link, BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Header } from './components/Header.jsx'
-// import { ProductList } from './components/ProductList.jsx'
-// import { CheckoutPage } from './pages/checkout.jsx'
 const ProductList = lazy(() => import('./components/ProductList.jsx'));
 const CheckoutPage = lazy(() => import('./pages/checkout.jsx'))
 
-// Ленивая загрузка lazy loading
-
 // https://github.com/dkosterin/store-project
-// npm install react-router
-// npm install react-router-dom
 
 function Hello() {
   return <h1>Загружаюсь...</h1>
@@ -22,14 +16,16 @@ function App() {
       title: "Кросовки",
       price: 1000,
       image: "./men-athletic-shoes-white.jpg",
-      quantity: 1
+      quantity: 1,
+      deliveryOption: 1
     },
     {
       id: 2,
       title: "Другие кроссовки",
       price: 600,
       image: "./men-brown-flat-sneakers.jpg",
-      quantity: 2
+      quantity: 2,
+      deliveryOption: 2
     },
   ]);
 

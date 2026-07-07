@@ -1,6 +1,12 @@
 import '../styles/checkout.css'
 
-function CartItem({product, onRemove}) {
+/*
+1. Подсчет количества товаров
+2. Подсчет стоимости без доставки
+3. Подсчет стоимости с доставкой
+*/
+
+function CartItem({product, changeCheck, onRemove}) {
   return (
     <div className="cart-item-container">
       <div className="delivery-date">
@@ -25,9 +31,10 @@ function CartItem({product, onRemove}) {
             Доставка:
           </div>
           <div className="delivery-option">
-            <input type="radio" checked
+            <input type="radio" checked={product.deliveryOption === 1}
+              onChange={() => changeCheck(product.id, 1)}
               className="delivery-option-input"
-              name="delivery-option-1" />
+              name={`delivery-option-${product.id}`} />
             <div>
               <div className="delivery-option-date">
                 Четверг, 4 июня
@@ -38,9 +45,10 @@ function CartItem({product, onRemove}) {
             </div>
           </div>
           <div className="delivery-option">
-            <input type="radio"
+            <input type="radio" checked={product.deliveryOption === 2}
+              onChange={() => changeCheck(product.id, 2)}
               className="delivery-option-input"
-              name="delivery-option-1" />
+              name={`delivery-option-${product.id}`} />
             <div>
               <div className="delivery-option-date">
                 Среда, 3 июня
@@ -51,9 +59,10 @@ function CartItem({product, onRemove}) {
             </div>
           </div>
           <div className="delivery-option">
-            <input type="radio"
+            <input type="radio" checked={product.deliveryOption === 3}
+              onChange={() => changeCheck(product.id, 3)}
               className="delivery-option-input"
-              name="delivery-option-1" />
+              name={`delivery-option-${product.id}`} />
             <div>
               <div className="delivery-option-date">
                 Вторник, 2 июня
@@ -74,7 +83,16 @@ function CartItem({product, onRemove}) {
 }
 
 function CheckoutPage({ cart, setCart }) {
-  console.log(cart);
+  
+  function changeCheck(id, idx) {
+    setCart(cart.map(cartItem => 
+      cartItem.id === id ?
+      {...cartItem, deliveryOption: idx} : 
+      {...cartItem}
+    ))
+
+  }
+  
   return (
     <>
       <div className="checkout-page">
@@ -83,6 +101,7 @@ function CheckoutPage({ cart, setCart }) {
         <div className="checkout-grid">
           <div className="order-summary">
             {cart.map((item => <CartItem key={item.id} product={item} 
+              changeCheck={changeCheck}
               onRemove={() => {
                 if (item.quantity > 1) {
                   setCart(cart.map((cartItem) => cartItem.id === item.id ? 
