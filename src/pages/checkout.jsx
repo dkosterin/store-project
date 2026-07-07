@@ -73,7 +73,7 @@ function CartItem({product, onRemove}) {
   )
 }
 
-export function CheckoutPage({ cart, setCart }) {
+function CheckoutPage({ cart, setCart }) {
   console.log(cart);
   return (
     <>
@@ -125,3 +125,5 @@ export function CheckoutPage({ cart, setCart }) {
     </>
   )
 }
+
+export default CheckoutPage

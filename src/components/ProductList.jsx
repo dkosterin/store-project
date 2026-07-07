@@ -3,7 +3,7 @@ import { products } from '../data/products.js'
 import { ProductItem } from './ProductItem.jsx'
 import '../styles/App.css'
 
-export function ProductList({cart, setCart, search}) {
+function ProductList({cart, setCart, search}) {
   const filteredProducts = useMemo(() => products.filter(product => 
     product.title.toLowerCase().includes(search.toLowerCase())), [search]);
 
@@ -27,3 +27,5 @@ export function ProductList({cart, setCart, search}) {
     </div>
   )
 }
+
+export default ProductList

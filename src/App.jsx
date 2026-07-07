@@ -1,16 +1,20 @@
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { Link, BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Header } from './components/Header.jsx'
-import { ProductList } from './components/ProductList.jsx'
-import { CheckoutPage } from './pages/checkout.jsx'
+// import { ProductList } from './components/ProductList.jsx'
+// import { CheckoutPage } from './pages/checkout.jsx'
+const ProductList = lazy(() => import('./components/ProductList.jsx'));
+const CheckoutPage = lazy(() => import('./pages/checkout.jsx'))
+
+// Ленивая загрузка lazy loading
 
 // https://github.com/dkosterin/store-project
 // npm install react-router
 // npm install react-router-dom
 
-/*
-В корзине добавить к CartItem кнопку удалить, чтобы она работала
-*/
+function Hello() {
+  return <h1>Загружаюсь...</h1>
+}
 
 function App() {
   const [cart, setCart] = useState([{
@@ -38,12 +42,14 @@ function App() {
   return (
     <BrowserRouter>
       <Header cartLength={cart.length} onSearch={setSearch}/>
-      <Routes>
-        <Route index element={<ProductList cart={cart} 
-          setCart={setCart} search={search}/>} />
-        <Route path="checkout" element={<CheckoutPage cart={cart} 
-          setCart={setCart} />} />
-      </Routes>
+      <Suspense fallback={<Hello />}>
+        <Routes>
+          <Route index element={<ProductList cart={cart} 
+            setCart={setCart} search={search}/>} />
+          <Route path="checkout" element={<CheckoutPage cart={cart} 
+            setCart={setCart} />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   )
 }

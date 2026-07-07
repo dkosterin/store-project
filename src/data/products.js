@@ -1,7 +1,7 @@
 export const products = [
     {
       id: 1,
-      title: "Кросовки",
+      title: "Кроссовки",
       seller: "Продавец",
       price: 1000,
       image: "./men-athletic-shoes-white.jpg"
