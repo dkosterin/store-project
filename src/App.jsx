@@ -5,10 +5,8 @@ const ProductList = lazy(() => import('./components/ProductList.jsx'));
 const CheckoutPage = lazy(() => import('./pages/checkout.jsx'))
 
 // https://github.com/dkosterin/store-project
-
-function Hello() {
-  return <h1>Загружаюсь...</h1>
-}
+// npm install react-router
+// npm install react-router-dom
 
 function App() {
   const [cart, setCart] = useState([{
@@ -38,7 +36,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header cartLength={cart.length} onSearch={setSearch}/>
-      <Suspense fallback={<Hello />}>
+      <Suspense fallback={<div>Загружаюсь...</div>}>
         <Routes>
           <Route index element={<ProductList cart={cart} 
             setCart={setCart} search={search}/>} />

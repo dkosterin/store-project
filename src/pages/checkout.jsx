@@ -1,10 +1,5 @@
 import '../styles/checkout.css'
 
-/*
-1. Подсчет количества товаров
-2. Подсчет стоимости без доставки
-3. Подсчет стоимости с доставкой
-*/
 
 function CartItem({product, changeCheck, onRemove}) {
   return (
@@ -83,6 +78,21 @@ function CartItem({product, changeCheck, onRemove}) {
 }
 
 function CheckoutPage({ cart, setCart }) {
+
+  let itemsCount = 0;
+  let price = 0;
+  let deliveryPrice = 0;
+
+  for (let item of cart) {
+    itemsCount += item.quantity;
+    price += item.price * item.quantity;
+    if (item.deliveryOption === 2) {
+      deliveryPrice += 120;
+    }
+    else if (item.deliveryOption === 3) {
+      deliveryPrice += 350;
+    }
+  }
   
   function changeCheck(id, idx) {
     setCart(cart.map(cartItem => 
@@ -90,7 +100,17 @@ function CheckoutPage({ cart, setCart }) {
       {...cartItem, deliveryOption: idx} : 
       {...cartItem}
     ))
+  }
 
+  function onRemove(item) {
+    if (item.quantity > 1) {
+      setCart(cart.map((cartItem) => cartItem.id === item.id ? 
+        {...cartItem, quantity: cartItem.quantity - 1} : 
+        {...cartItem}));
+    }
+    else {
+      setCart(cart.filter((cartItem) => cartItem.id != item.id));
+    }
   }
   
   return (
@@ -102,17 +122,7 @@ function CheckoutPage({ cart, setCart }) {
           <div className="order-summary">
             {cart.map((item => <CartItem key={item.id} product={item} 
               changeCheck={changeCheck}
-              onRemove={() => {
-                if (item.quantity > 1) {
-                  setCart(cart.map((cartItem) => cartItem.id === item.id ? 
-                    {...cartItem, quantity: cartItem.quantity - 1} : 
-                    {...cartItem}));
-                }
-                else {
-                  setCart(cart.filter((cartItem) => cartItem.id != item.id));
-                }
-              }
-            } />))}
+              onRemove={() => onRemove(item)} />))}
           </div>
 
           <div className="payment-summary">
@@ -121,18 +131,18 @@ function CheckoutPage({ cart, setCart }) {
               </div>
 
               <div className="payment-summary-row">
-                <div>Товары (2):</div>
-                <div className="payment-summary-money">2000 руб.</div>
+                <div>Товары ({itemsCount}):</div>
+                <div className="payment-summary-money">{price} руб.</div>
               </div>
 
               <div className="payment-summary-row">
                 <div>Доставка:</div>
-                <div className="payment-summary-money">120 руб.</div>
+                <div className="payment-summary-money">{deliveryPrice} руб.</div>
               </div>
 
               <div className="payment-summary-row total-row">
                 <div>Всего:</div>
-                <div className="payment-summary-money">2120 руб.</div>
+                <div className="payment-summary-money">{price + deliveryPrice} руб.</div>
               </div>
 
               <button className="place-order-button button-primary">
