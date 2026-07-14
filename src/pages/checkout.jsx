@@ -1,7 +1,7 @@
 import '../styles/checkout.css'
 
 
-function CartItem({product, changeCheck, onRemove}) {
+function CartItem({product, dispatch}) {
   return (
     <div className="cart-item-container">
       <div className="delivery-date">
@@ -27,7 +27,13 @@ function CartItem({product, changeCheck, onRemove}) {
           </div>
           <div className="delivery-option">
             <input type="radio" checked={product.deliveryOption === 1}
-              onChange={() => changeCheck(product.id, 1)}
+              onChange={() => dispatch({
+                type: "CHANGE_DELIVERY",
+                payload: {
+                  id: product.id,
+                  deliveryOption: 1
+                }
+              })}
               className="delivery-option-input"
               name={`delivery-option-${product.id}`} />
             <div>
@@ -41,7 +47,13 @@ function CartItem({product, changeCheck, onRemove}) {
           </div>
           <div className="delivery-option">
             <input type="radio" checked={product.deliveryOption === 2}
-              onChange={() => changeCheck(product.id, 2)}
+              onChange={() => dispatch({
+                type: "CHANGE_DELIVERY",
+                payload: {
+                  id: product.id,
+                  deliveryOption: 2
+                }
+              })}
               className="delivery-option-input"
               name={`delivery-option-${product.id}`} />
             <div>
@@ -55,7 +67,13 @@ function CartItem({product, changeCheck, onRemove}) {
           </div>
           <div className="delivery-option">
             <input type="radio" checked={product.deliveryOption === 3}
-              onChange={() => changeCheck(product.id, 3)}
+              onChange={() => dispatch({
+                type: "CHANGE_DELIVERY",
+                payload: {
+                  id: product.id,
+                  deliveryOption: 3
+                }
+              })}
               className="delivery-option-input"
               name={`delivery-option-${product.id}`} />
             <div>
@@ -70,14 +88,17 @@ function CartItem({product, changeCheck, onRemove}) {
         </div>
       </div>
       <div className="bottom-part">
-        <button onClick={onRemove} className='remove-btn'>Удалить</button>
+        <button onClick={() => dispatch({
+          type: "REMOVE_PRODUCT",
+          payload: product.id
+        })} className='remove-btn'>Удалить</button>
         <div>Количество: {product.quantity}</div>
       </div>
     </div>
   )
 }
 
-function CheckoutPage({ cart, setCart }) {
+function CheckoutPage({ cart, dispatch }) {
 
   let itemsCount = 0;
   let price = 0;
@@ -94,25 +115,6 @@ function CheckoutPage({ cart, setCart }) {
     }
   }
   
-  function changeCheck(id, idx) {
-    setCart(cart.map(cartItem => 
-      cartItem.id === id ?
-      {...cartItem, deliveryOption: idx} : 
-      {...cartItem}
-    ))
-  }
-
-  function onRemove(item) {
-    if (item.quantity > 1) {
-      setCart(cart.map((cartItem) => cartItem.id === item.id ? 
-        {...cartItem, quantity: cartItem.quantity - 1} : 
-        {...cartItem}));
-    }
-    else {
-      setCart(cart.filter((cartItem) => cartItem.id != item.id));
-    }
-  }
-  
   return (
     <>
       <div className="checkout-page">
@@ -121,8 +123,7 @@ function CheckoutPage({ cart, setCart }) {
         <div className="checkout-grid">
           <div className="order-summary">
             {cart.map((item => <CartItem key={item.id} product={item} 
-              changeCheck={changeCheck}
-              onRemove={() => onRemove(item)} />))}
+              dispatch={dispatch} />))}
           </div>
 
           <div className="payment-summary">
