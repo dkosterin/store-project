@@ -1,7 +1,11 @@
-import '../styles/checkout.css'
+import { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
+import '../styles/checkout.css';
 
 
-function CartItem({product, dispatch}) {
+function CartItem({product}) {
+  const {dispatch} = useContext(CartContext);
+
   return (
     <div className="cart-item-container">
       <div className="delivery-date">
@@ -98,8 +102,9 @@ function CartItem({product, dispatch}) {
   )
 }
 
-function CheckoutPage({ cart, dispatch }) {
+function CheckoutPage() {
 
+  const {cart} = useContext(CartContext);
   let itemsCount = 0;
   let price = 0;
   let deliveryPrice = 0;
@@ -122,8 +127,7 @@ function CheckoutPage({ cart, dispatch }) {
 
         <div className="checkout-grid">
           <div className="order-summary">
-            {cart.map((item => <CartItem key={item.id} product={item} 
-              dispatch={dispatch} />))}
+            {cart.map((item => <CartItem key={item.id} product={item} />))}
           </div>
 
           <div className="payment-summary">

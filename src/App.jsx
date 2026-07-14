@@ -1,6 +1,7 @@
 import { useState, lazy, Suspense, useReducer } from 'react'
 import { Link, BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Header } from './components/Header.jsx'
+import { CartContext } from './context/CartContext.jsx'
 const ProductList = lazy(() => import('./components/ProductList.jsx'));
 const CheckoutPage = lazy(() => import('./pages/checkout.jsx'))
 
@@ -80,20 +81,17 @@ function App() {
 
   const [search, setSearch] = useState("");
 
-  /* Что можно сделать:
-  1. Перейти на useContext
-  */
   return (
     <BrowserRouter>
       <Header cartLength={cart.length} onSearch={setSearch}/>
-      <Suspense fallback={<div>Загружаюсь...</div>}>
-        <Routes>
-          <Route index element={<ProductList cart={cart} 
-            dispatch={dispatch} search={search}/>} />
-          <Route path="checkout" element={<CheckoutPage cart={cart} 
-            dispatch={dispatch} />} />
-        </Routes>
-      </Suspense>
+      <CartContext.Provider value={{cart, dispatch}}>
+        <Suspense fallback={<div>Загружаюсь...</div>}>
+          <Routes>
+            <Route index element={<ProductList search={search}/>} />
+            <Route path="checkout" element={<CheckoutPage />} />
+          </Routes>
+        </Suspense>
+      </CartContext.Provider>
     </BrowserRouter>
   )
 }

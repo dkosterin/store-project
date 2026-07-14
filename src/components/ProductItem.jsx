@@ -1,7 +1,9 @@
-// Чистый компонент
-// В нем только возврат разметки, работа с props и хуки
+import { CartContext } from "../context/CartContext"
+import { useContext } from "react"
 
-export function ProductItem({product, dispatch}) {
+export function ProductItem({product}) {
+  const {dispatch} = useContext(CartContext);
+
   return (
     <div className="product-item">
         <div className="product-image">
