@@ -7,7 +7,7 @@ export function ProductItem({product}) {
   return (
     <div className="product-item">
         <div className="product-image">
-            <img src={product.image} />
+            <img src={`http://localhost:8000/${product.image}`} />
         </div>
         <div className="product-title">{product.title}</div>
         <div className="product-seller">{product.seller}</div>

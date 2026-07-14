@@ -14,7 +14,7 @@ function CartItem({product}) {
 
       <div className="cart-item-details-grid">
         <img className="product-image"
-          src={product.image} />
+          src={`http://localhost:8000/${product.image}`} />
 
         <div className="cart-item-details">
           <div className="product-name">

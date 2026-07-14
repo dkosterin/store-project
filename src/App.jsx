@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense, useReducer } from 'react'
+import { useState, useEffect, lazy, Suspense, useReducer } from 'react'
 import { Link, BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Header } from './components/Header.jsx'
 import { CartContext } from './context/CartContext.jsx'
@@ -6,6 +6,7 @@ const ProductList = lazy(() => import('./components/ProductList.jsx'));
 const CheckoutPage = lazy(() => import('./pages/checkout.jsx'))
 
 // https://github.com/dkosterin/store-project
+// https://github.com/dkosterin/store-project-backend
 // npm install react-router
 // npm install react-router-dom
 
@@ -61,11 +62,19 @@ function cartReducer(state, action) {
 
 
 function App() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/products")
+      .then(response => response.json())
+      .then(data => setProducts(data));
+  }, []);
+
   const [cart, dispatch] = useReducer(cartReducer, [{
       id: 1,
       title: "Кросовки",
       price: 1000,
-      image: "./men-athletic-shoes-white.jpg",
+      image: "images/men-athletic-shoes-white.jpg",
       quantity: 1,
       deliveryOption: 1
     },
@@ -73,7 +82,7 @@ function App() {
       id: 2,
       title: "Другие кроссовки",
       price: 600,
-      image: "./men-brown-flat-sneakers.jpg",
+      image: "images/men-brown-flat-sneakers.jpg",
       quantity: 2,
       deliveryOption: 2
     },
@@ -87,7 +96,8 @@ function App() {
       <CartContext.Provider value={{cart, dispatch}}>
         <Suspense fallback={<div>Загружаюсь...</div>}>
           <Routes>
-            <Route index element={<ProductList search={search}/>} />
+            <Route index element={<ProductList products={products} 
+              search={search}/>} />
             <Route path="checkout" element={<CheckoutPage />} />
           </Routes>
         </Suspense>

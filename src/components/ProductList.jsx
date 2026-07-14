@@ -1,11 +1,12 @@
 import { useMemo } from 'react'
-import { products } from '../data/products.js'
+//import { products } from '../data/products.js'
 import { ProductItem } from './ProductItem.jsx'
 import '../styles/App.css'
 
-function ProductList({search}) {
+function ProductList({products, search}) {
   const filteredProducts = useMemo(() => products.filter(product => 
-    product.title.toLowerCase().includes(search.toLowerCase())), [search]);
+    product.title.toLowerCase().includes(search.toLowerCase())), 
+    [products, search]);
 
   return (
     <div className="products-list">
