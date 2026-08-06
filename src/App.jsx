@@ -4,6 +4,7 @@ import { Header } from './components/Header.jsx'
 import { CartContext } from './context/CartContext.jsx'
 const ProductList = lazy(() => import('./components/ProductList.jsx'));
 const CheckoutPage = lazy(() => import('./pages/checkout.jsx'))
+const OrdersPage = lazy(() => import('./pages/orders.jsx'))
 
 // https://github.com/dkosterin/store-project
 // https://github.com/dkosterin/store-project-backend
@@ -98,6 +99,7 @@ function App() {
           <Routes>
             <Route index element={<ProductList products={products} 
               search={search}/>} />
+            <Route path="orders" element={<OrdersPage />} />
             <Route path="checkout" element={<CheckoutPage />} />
           </Routes>
         </Suspense>
