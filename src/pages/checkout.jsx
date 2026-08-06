@@ -3,6 +3,25 @@ import { CartContext } from '../context/CartContext';
 import { CartItem } from '../components/CartItem.jsx'
 import '../styles/checkout.css';
 
+/*
+const newOrder = {
+  products: массив объектов вида
+  {
+    id:
+    title:
+    image:
+    price:
+    deliveryDate:
+    count (то же самое, что и quantity):
+  }
+  Если deliveryOption === 1, то new Date() + 7 дней
+  Если deliveryOption === 2, то new Date() + 4 дня
+  Если deliveryOption === 3, то new Date() + 2 дня
+}
+
+1. Создать объект newOrder по нажатию на "Оформить заказ"
+2. Сделать POST запрос на сервер
+*/
 
 function CheckoutPage() {
 
