@@ -18,7 +18,7 @@ export function OrderItem({order}) {
                     return (
                         <div key={product.id}>
                             <div className="product-info">
-                                <img src={`http://localhost:8000${product.image}`} />
+                                <img src={`http://localhost:8000/${product.image}`} />
                                 <p>Доставка: {formatDate(product.deliveryDate)}</p>
                             </div>
                         </div>

@@ -23,6 +23,23 @@ const newOrder = {
 2. Сделать POST запрос на сервер
 */
 
+function getDeliveryDate(deliveryOption) {
+  const date = new Date();
+  switch(deliveryOption) {
+    case 1:
+      date.setDate(date.getDate() + 7);
+      break;
+    case 2:
+      date.setDate(date.getDate() + 4);
+      break;
+    case 3:
+      date.setDate(date.getDate() + 2);
+      break;
+  }
+
+  return date.toISOString().split("T")[0];
+}
+
 function CheckoutPage() {
 
   const {cart} = useContext(CartContext);
@@ -39,6 +56,33 @@ function CheckoutPage() {
     else if (item.deliveryOption === 3) {
       deliveryPrice += 350;
     }
+  }
+
+  function createOrder() {
+    const newOrder = {
+      products: cart.map(product => {
+        return {
+          id: product.id,
+          title: product.title,
+          image: product.image,
+          price: product.price,
+          deliveryDate: getDeliveryDate(product.deliveryOption),
+          quantity: product.quantity
+        }
+      })
+    }
+
+    fetch("http://localhost:8000/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newOrder)
+    }).then(response => {
+      if (response.ok) {
+        console.log("Order created");
+      }
+    })
   }
   
   return (
@@ -71,7 +115,7 @@ function CheckoutPage() {
                 <div className="payment-summary-money">{price + deliveryPrice} руб.</div>
               </div>
 
-              <button className="place-order-button button-primary">
+              <button className="place-order-button button-primary" onClick={createOrder}>
                 Оформить заказ
               </button>
           </div>

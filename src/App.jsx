@@ -55,6 +55,9 @@ function cartReducer(state, action) {
         cartItem
       )
     }
+
+    case "CLEAR":
+      return [];
     
     default:
       return state;
