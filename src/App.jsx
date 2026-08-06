@@ -60,6 +60,22 @@ function cartReducer(state, action) {
       return state;
   }
 }
+/*
+localStorage.getItem(key) - взять из localStorage объект по ключу key
+localStorage.setItem(key, value) - записать в localStorage по ключу key значение value
+localStorage.removeItem(key) - удалить запись по ключу key
+localStorage.clear() - очистить
+
+В localStorage не стоит хранить объекты
+
+Для сохранения объектов преобразуем в строку
+const value = JSON.stringify(obj);
+localStorage.setItem(key, value);
+
+Для получения объектов преобразуем из строк
+const value = localStorage.getItem(key);
+const obj = JSON.parse(value);
+*/
 
 
 function App() {
@@ -71,7 +87,9 @@ function App() {
       .then(data => setProducts(data));
   }, []);
 
-  const [cart, dispatch] = useReducer(cartReducer, [{
+  let savedCart = JSON.parse(localStorage.getItem("cart"));
+  if (!savedCart)
+    savedCart = [{
       id: 1,
       title: "Кросовки",
       price: 1000,
@@ -87,7 +105,13 @@ function App() {
       quantity: 2,
       deliveryOption: 2
     },
-  ]);
+  ];
+
+  const [cart, dispatch] = useReducer(cartReducer, savedCart);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart])
 
   const [search, setSearch] = useState("");
 
